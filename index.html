@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportune - Find Your Dream Job</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1><i class="fas fa-briefcase"></i> Opportune</h1>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn" onclick="showSection('jobs')">
+                    <i class="fas fa-search"></i> Browse Jobs
+                </button>
+                <button class="nav-btn" onclick="showSection('post')">
+                    <i class="fas fa-plus"></i> Post Job
+                </button>
+                <button class="nav-btn" onclick="showSection('applications')">
+                    <i class="fas fa-file-alt"></i> My Applications
+                </button>
+                <button class="nav-btn" onclick="showSection('profile')">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+                <div class="user-info">
+                    <span class="current-user">Welcome, <span id="currentUserName">Guest</span></span>
+                    <div class="notification-bell" onclick="toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificationCount" class="notification-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- User Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome to Opportune</h2>
+            <p>Enter your details to get started</p>
+            <form id="loginForm">
+                <input type="text" id="usernameInput" placeholder="Enter your username" required>
+                <select id="userTypeSelect" required>
+                    <option value="">Select your role</option>
+                    <option value="job_seeker">Job Seeker</option>
+                    <option value="employer">Employer</option>
+                </select>
+                <button type="submit">Get Started</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div id="notificationsPanel" class="notifications-panel">
+        <div class="notifications-header">
+            <h3>Notifications</h3>
+            <button onclick="clearNotifications()" class="clear-btn">Clear All</button>
+        </div>
+        <div id="notificationsList" class="notifications-list">
+            <!-- Notifications will be rendered here -->
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Jobs Section -->
+        <section id="jobsSection" class="content-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-briefcase"></i> Latest Job Opportunities</h2>
+                <div class="job-controls">
+                    <input type="text" id="searchInput" placeholder="Search jobs..." class="search-input">
+                    <select id="locationFilter" class="filter-select">
+                        <option value="">All Locations</option>
+                        <option value="Remote">Remote</option>
+                        <option value="New York">New York</option>
+                        <option value="San Francisco">San Francisco</option>
+                        <option value="London">London</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Bangalore">Bangalore</option>
+                    </select>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
+            </div>
+            <div id="jobsContainer" class="jobs-container">
+                <!-- Jobs will be dynamically rendered here -->
+            </div>
+        </section>
+
+        <!-- Post Job Section -->
+        <section id="postSection" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-plus-circle"></i> Post a New Job</h2>
+            </div>
+            <div class="post-container">
+                <form id="jobForm" class="job-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobTitle">Job Title</label>
+                            <input type="text" id="jobTitle" placeholder="e.g. Senior Software Engineer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" placeholder="e.g. Tech Corp" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="e.g. Remote / New York" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobType">Job Type</label>
+                            <select id="jobType" required>
+                                <option value="">Select type</option>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Contract">Contract</option>
+                                <option value="Internship">Internship</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="salary">Salary Range</label>
+                            <input type="text" id="salary" placeholder="e.g. $80,000 - $120,000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Experience Level</label>
+                            <select id="experience" required>
+                                <option value="">Select level</option>
+                                <option value="Entry Level">Entry Level (0-2 years)</option>
+                                <option value="Mid Level">Mid Level (3-5 years)</option>
+                                <option value="Senior Level">Senior Level (6+ years)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Required Skills (comma-separated)</label>
+                        <input type="text" id="skills" placeholder="e.g. JavaScript, React, Node.js" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Job Description</label>
+                        <textarea id="description" rows="8" placeholder="Describe the role, responsibilities, and requirements..." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="save-draft-btn">Save Draft</button>
+                        <button type="submit" class="publish-btn">Post Job</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Applications Section -->
+        <section id="applicationsSection" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-file-alt"></i> My Applications</h2>
+            </div>
+            <div id="applicationsContainer" class="applications-container">
+                <!-- Applications will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profileSection" class="content-section">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <img id="profileAvatar" src="" alt="Profile Avatar">
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="profileName">Your Name</h2>
+                        <p id="profileRole">Job Seeker</p>
+                        <p id="profileBio">Looking for exciting opportunities</p>
+                        <div class="profile-stats">
+                            <span class="stat">
+                                <strong id="userJobCount">0</strong> <span id="statLabel">Applications</span>
+                            </span>
+                            <span class="stat">
+                                <strong id="userActivityCount">0</strong> Activities
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-content">
+                <h3 id="profileContentTitle">My Applications</h3>
+                <div id="profileContentContainer" class="profile-content-container">
+                    <!-- Profile content will be rendered here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
